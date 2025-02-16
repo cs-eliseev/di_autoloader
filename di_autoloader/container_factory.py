@@ -1,8 +1,8 @@
 from typing import Dict, Any
-from src.container_loader import DIContainerLoader
-from src.container_wrapper import ContainerWrapper
-from src.dependency_resolver import DependencyResolver
-from src.provider_factory import ProviderFactory
+from di_autoloader.container_loader import DIContainerLoader
+from di_autoloader.container_wrapper import ContainerWrapper
+from di_autoloader.dependency_resolver import DependencyResolver
+from di_autoloader.provider_factory import ProviderFactory
 
 class ContainerFactory:
     @staticmethod

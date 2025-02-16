@@ -1,7 +1,7 @@
 import importlib
 from typing import Any, Dict
 from dependency_injector import providers, containers
-from src.dependency_resolver import DependencyResolver
+from di_autoloader.dependency_resolver import DependencyResolver
 
 class ProviderNotFound(ValueError):
     def __init__(self, provider: str) -> None:

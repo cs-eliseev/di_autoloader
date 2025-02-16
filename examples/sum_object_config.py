@@ -4,7 +4,7 @@ container = container_init(
     {
         'sum_object': {
             'provider': 'Factory',
-            'provides': 'examples.resources.src.sum_object.SumObject',
+            'provides': 'examples.resources.di_autoloader.sum_object.SumObject',
             'kwargs': {
                 'a': {'config': 'settings.a'},
                 'b': {'config': 'settings.b'}
@@ -12,7 +12,7 @@ container = container_init(
         },
         'sum_object_s': {
             'provider': 'Singleton',
-            'provides': 'examples.resources.src.sum_object.SumObject',
+            'provides': 'examples.resources.di_autoloader.sum_object.SumObject',
             'kwargs': {
                 'a': {'config': 'settings.a'},
                 'b': {'config': 'settings.b'}

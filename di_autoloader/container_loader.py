@@ -1,6 +1,6 @@
 from typing import Any, Dict
 from dependency_injector import containers
-from src.provider_factory import ProviderFactory
+from di_autoloader.provider_factory import ProviderFactory
 
 class ConfigurationDependencyIncorrect(ValueError):
     def __init__(self, name: str) -> None:

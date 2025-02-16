@@ -2,11 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name="di_autoloader",
-    version="0.0.1",
+    version="0.0.2",
     description="Dependency Injector Autoloader",
     author="Eliseev Alexey",
     license="MIT",
-    packages=find_packages(),
+    url="https://github.com/cs-eliseev/di_autoloader",
+    packages=["di_autoloader"],
+    package_dir={"di_autoloader": "di_autoloader"},
     install_requires=[
         "dependency-injector>=4.45.0"
     ],
