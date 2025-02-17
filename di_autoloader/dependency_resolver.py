@@ -12,7 +12,7 @@ class DependencyResolver:
             return self._prepare_container_str(value['container'], self.container)
         elif isinstance(value, dict) and 'config' in value:
             # Use configs: {'config': 'key'}
-            return self._prepare_container_str(value['config'],  self.container.config)
+            return self.container.config.get(value['config'])
         elif isinstance(value, dict):
             return {key: self.resolve(val) for key, val in value.items()}
         elif isinstance(value, list):
@@ -20,6 +20,6 @@ class DependencyResolver:
         return value
 
     def _prepare_container_str(self, value: str, relation: Any) -> Any:
-        if hasattr(relation, value):
+        if value in dir(relation):
             resolved_value = getattr(relation, value)
             return resolved_value() if callable(resolved_value) else resolved_value
