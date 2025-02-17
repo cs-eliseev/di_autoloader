@@ -74,10 +74,10 @@ class ProviderFactory:
             )
 
         if config.get('provider') == 'Delegate':
-            return {'name': provider_type(lambda: instance(**kwargs))}
+            return {name: provider_type(lambda: instance(**kwargs))}
 
         # Обычное создание провайдера
-        return {'name': self._make_base_provider(provider_type=provider_type, instance=instance, kwargs=kwargs)}
+        return {name: self._make_base_provider(provider_type=provider_type, instance=instance, kwargs=kwargs)}
 
     @staticmethod
     def _make_base_provider(provider_type, instance, kwargs) -> Any:

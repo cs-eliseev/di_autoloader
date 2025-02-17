@@ -3,11 +3,11 @@ from examples.resources.src.container_test_init import container_init
 container = container_init({
     'sum_handler': {
         'provider': 'Factory',
-        'provides': 'examples.resources.di_autoloader.sum_handler.SumHandler',
+        'provides': 'examples.resources.src.sum_handler.SumHandler',
     },
     'sum_handler_s': {
         'provider': 'Singleton',
-        'provides': 'examples.resources.di_autoloader.sum_handler.SumHandler',
+        'provides': 'examples.resources.src.sum_handler.SumHandler',
     }
 })
 

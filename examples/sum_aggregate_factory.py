@@ -4,32 +4,32 @@ container = container_init(
     {
         'sum_object': {
             'provider': 'Factory',
-            'provides': 'examples.resources.di_autoloader.sum_object.SumObject',
+            'provides': 'examples.resources.src.sum_object.SumObject',
             'kwargs_config': 'object',
         },
         'sum_object_s': {
             'provider': 'Singleton',
-            'provides': 'examples.resources.di_autoloader.sum_object.SumObject',
+            'provides': 'examples.resources.src.sum_object.SumObject',
             'kwargs_config': 'object',
         },
         'sum_aggregate': {
             'provider': 'Factory',
-            'provides': 'examples.resources.di_autoloader.sum_aggregate.SumAggregate',
+            'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
             'kwargs_config': 'aggregate',
         },
         'sum_aggregate2': {
             'provider': 'Factory',
-            'provides': 'examples.resources.di_autoloader.sum_aggregate.SumAggregate',
+            'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
             'kwargs_config': 'aggregate_s',
         },
         'sum_aggregate_s': {
             'provider': 'Singleton',
-            'provides': 'examples.resources.di_autoloader.sum_aggregate.SumAggregate',
+            'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
             'kwargs_config': 'aggregate',
         },
         'sum_aggregate_s2': {
             'provider': 'Singleton',
-            'provides': 'examples.resources.di_autoloader.sum_aggregate.SumAggregate',
+            'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
             'kwargs_config': 'aggregate_s',
         },
     }, {

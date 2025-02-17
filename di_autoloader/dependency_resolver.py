@@ -20,6 +20,6 @@ class DependencyResolver:
         return value
 
     def _prepare_container_str(self, value: str, relation: Any) -> Any:
-        if value in dir(relation):
+        if hasattr(relation, value):
             resolved_value = getattr(relation, value)
             return resolved_value() if callable(resolved_value) else resolved_value
