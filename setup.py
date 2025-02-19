@@ -1,8 +1,8 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name="di_autoloader",
-    version="0.0.4",
+    version="0.0.5",
     description="Dependency Injector Autoloader",
     author="Eliseev Alexey",
     license="MIT",
