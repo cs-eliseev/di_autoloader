@@ -5,24 +5,31 @@ container = container_init(
         'sum_object': {
             'provider': 'Factory',
             'provides': 'examples.resources.src.sum_object.SumObject',
-            'kwargs_config': 'settings',
+            'kwargs_factory': {
+                '1': {
+                    'a': 3,
+                    'b': 5
+                },
+                '2': {
+                    'a': 3,
+                    'b': 6
+                },
+            },
         },
         'sum_object_s': {
             'provider': 'Singleton',
             'provides': 'examples.resources.src.sum_object.SumObject',
-            'kwargs_config': 'settings',
+            'kwargs_factory': {
+                '1': {
+                    'a': 3,
+                    'b': 5
+                },
+                '2': {
+                    'a': 3,
+                    'b': 6
+                },
+            },
         },
-    }, {
-        'settings': {
-            '1': {
-                'a': 3,
-                'b': 3
-            },
-            '2': {
-                'a': 3,
-                'b': 4
-            },
-        }
     }
 )
 

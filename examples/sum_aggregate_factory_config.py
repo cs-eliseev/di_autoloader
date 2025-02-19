@@ -5,32 +5,32 @@ container = container_init(
         'sum_object': {
             'provider': 'Factory',
             'provides': 'examples.resources.src.sum_object.SumObject',
-            'kwargs_config': 'object',
+            'kwargs_factory': {'config': 'object'},
         },
         'sum_object_s': {
             'provider': 'Singleton',
             'provides': 'examples.resources.src.sum_object.SumObject',
-            'kwargs_config': 'object',
+            'kwargs_factory': {'config': 'object'},
         },
         'sum_aggregate': {
             'provider': 'Factory',
             'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
-            'kwargs_config': 'aggregate',
+            'kwargs_factory': {'config': 'aggregate'},
         },
         'sum_aggregate2': {
             'provider': 'Factory',
             'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
-            'kwargs_config': 'aggregate_s',
+            'kwargs_factory': {'config': 'aggregate_s'},
         },
         'sum_aggregate_s': {
             'provider': 'Singleton',
             'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
-            'kwargs_config': 'aggregate',
+            'kwargs_factory': {'config': 'aggregate'},
         },
         'sum_aggregate_s2': {
             'provider': 'Singleton',
             'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
-            'kwargs_config': 'aggregate_s',
+            'kwargs_factory': {'config': 'aggregate_s'},
         },
     }, {
         'object': {
@@ -40,7 +40,7 @@ container = container_init(
             },
             '2': {
                 'a': 4,
-                'b': 4
+                'b': 3
             },
         },
         'aggregate': {
