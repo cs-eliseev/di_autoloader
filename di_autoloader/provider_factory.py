@@ -55,20 +55,31 @@ class ProviderFactory:
         instance = self.import_class(class_path=config['provides']) if 'provides' in config else None
         kwargs = {k: self.resolver.resolve(value=v) for k, v in config.get('kwargs', {}).items()}
 
-        # kwargs_map Handler
-        if 'kwargs_config' in config:
-            return self._make_providers_kwargs_config(
+        # kwargs_factory Handler
+        if 'kwargs_factory' in config and isinstance(config['kwargs_factory'], dict):
+            kwargs_map = self._prepare_kwargs_factory(config['kwargs_factory'])
+            return self._make_providers_kwargs_map(
                 name=name,
-                config=config,
+                kwargs_map=kwargs_map,
                 provider_type=provider_type,
                 instance=instance
             )
-
-        # kwargs_factory Handler (NOT USED)
-        if 'kwargs_factory' in config:
-            return self._make_providers_kwargs_factory(
+        if 'kwargs_map' in config and isinstance(config['kwargs_map'], dict):
+            kwargs_map = config['kwargs_map']
+            return self._make_providers_kwargs_map(
                 name=name,
-                config=config,
+                kwargs_map=kwargs_map,
+                provider_type=provider_type,
+                instance=instance
+            )
+        # kwargs_map Handler
+        if 'kwargs_config' in config:
+            kwargs_map = self.resolver.resolve({'config': config['kwargs_config']})
+            if not isinstance(kwargs_map, dict):
+                raise KwargsMapUndefined(kwargs_map)
+            return self._make_providers_kwargs_map(
+                name=name,
+                kwargs_map=kwargs_map,
                 provider_type=provider_type,
                 instance=instance
             )
@@ -83,10 +94,7 @@ class ProviderFactory:
     def _make_base_provider(provider_type, instance, kwargs) -> Any:
         return provider_type(instance, **kwargs) if instance else provider_type(**kwargs)
 
-    def _make_providers_kwargs_config(self, name: str, config: Dict[str, Any], provider_type, instance) -> dict[str, Any]:
-        kwargs_map = self.resolver.resolve({'config': config['kwargs_config']})
-        if not isinstance(kwargs_map, dict):
-            raise KwargsMapUndefined(kwargs_map)
+    def _make_providers_kwargs_map(self, name: str, kwargs_map: Dict[str, Any], provider_type, instance) -> dict[str, Any]:
         items = {}
         for key, kwargs in kwargs_map.items():
             if not isinstance(kwargs, dict):
@@ -98,11 +106,12 @@ class ProviderFactory:
             )
         return items
 
-    def _make_providers_kwargs_factory(self, name: str, config: Dict[str, Any], provider_type, instance) -> dict[str, Any]:
-        kwargs_factories = {k: self.resolver.resolve(value=v) for k, v in config['kwargs_factory'].items()}
-        items = {}
-        for key, factory_name in kwargs_factories.items():
-            if not hasattr(self.container, factory_name):
-                raise Exception(f"Factory provider '{factory_name}' not found in container.")
-            items[f"{name}__{key}"] = provider_type(instance, **{key: getattr(self.container, factory_name)})
-        return items
+    def _prepare_kwargs_factory(self, kwargs_data: dict[str, Any]) -> dict:
+        # get from container config
+        if 'config' in kwargs_data:
+            kwargs_map = self.resolver.resolve(kwargs_data)
+            if not isinstance(kwargs_map, dict):
+                raise KwargsMapUndefined(kwargs_map)
+            return kwargs_map
+
+        return kwargs_data
