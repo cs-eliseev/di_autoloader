@@ -26,6 +26,7 @@ class ProviderFactory:
         'Factory': providers.Factory,
         'Singleton': providers.Singleton,
         'Delegate': providers.Delegate,
+        'Callable': providers.Callable,
     }
 
     def __init__(
