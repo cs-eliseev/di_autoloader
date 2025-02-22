@@ -64,25 +64,6 @@ class ProviderFactory:
                 provider_type=provider_type,
                 instance=instance
             )
-        if 'kwargs_map' in config and isinstance(config['kwargs_map'], dict):
-            kwargs_map = config['kwargs_map']
-            return self._make_providers_kwargs_map(
-                name=name,
-                kwargs_map=kwargs_map,
-                provider_type=provider_type,
-                instance=instance
-            )
-        # kwargs_map Handler
-        if 'kwargs_config' in config:
-            kwargs_map = self.resolver.resolve({'config': config['kwargs_config']})
-            if not isinstance(kwargs_map, dict):
-                raise KwargsMapUndefined(kwargs_map)
-            return self._make_providers_kwargs_map(
-                name=name,
-                kwargs_map=kwargs_map,
-                provider_type=provider_type,
-                instance=instance
-            )
 
         if config.get('provider') == 'Delegate':
             return {name: provider_type(lambda: instance(**kwargs))}
