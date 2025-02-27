@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="di_autoloader",
-    version="0.1.0",
+    version="0.1.1",
     description="Dependency Injector Autoloader",
     author="Eliseev Alexey",
     license="MIT",
