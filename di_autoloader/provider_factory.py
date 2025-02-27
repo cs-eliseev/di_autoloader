@@ -25,8 +25,14 @@ class ProviderFactory:
         'Configuration': providers.Configuration,
         'Factory': providers.Factory,
         'Singleton': providers.Singleton,
-        'Delegate': providers.Delegate,
         'Callable': providers.Callable,
+        'Coroutine': providers.Coroutine,
+        'Object  ': providers.Object,
+        'List': providers.List,
+        'Dict': providers.Dict,
+        'Resource': providers.Resource,
+        'Dependency': providers.Dependency,
+        'Selector': providers.Selector,
     }
 
     def __init__(
