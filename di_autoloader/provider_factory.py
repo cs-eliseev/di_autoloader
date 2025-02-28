@@ -51,22 +51,22 @@ class ProviderFactory:
     def import_class(class_path: str):
         try:
             module_name, class_name = class_path.rsplit('.', 1)
-            module = importlib.import_module(module_name)
+            module = importlib.import_module(name=module_name)
             return getattr(module, class_name)
         except (ImportError, AttributeError) as e:
-            raise ClassImportFailed(class_path, e)
+            raise ClassImportFailed(class_path=class_path, error=e)
 
     def create_provider(self, name: str, config: Dict[str, Any]) -> Any:
         provider = config.get('provider', 'Factory')
         provider_type = self.PROVIDER_MAP.get(provider)
         if not provider_type:
-            raise ProviderNotFound(provider)
+            raise ProviderNotFound(provider=provider)
         instance = self.import_class(class_path=config['provides']) if 'provides' in config else None
-        kwargs = {k: self.resolver.resolve(value=v) for k, v in config.get('kwargs', {}).items()}
+        kwargs = {key: self.resolver.resolve(value=value) for key, value in config.get('kwargs', {}).items()}
 
         # kwargs_factory Handler
         if 'kwargs_factory' in config and isinstance(config['kwargs_factory'], dict):
-            kwargs_map = self._prepare_kwargs_factory(config['kwargs_factory'])
+            kwargs_map = self._prepare_kwargs_factory(kwargs_data=config['kwargs_factory'])
             return self._make_providers_kwargs_map(
                 name=name,
                 kwargs_map=kwargs_map,
@@ -88,7 +88,7 @@ class ProviderFactory:
         items = {}
         for key, kwargs in kwargs_map.items():
             if not isinstance(kwargs, dict):
-                raise KwargsUndefined(kwargs)
+                raise KwargsUndefined(kwargs_map=kwargs)
             items[f"{name}__{key}"] = self._make_base_provider(
                 provider_type=provider_type,
                 instance=instance,
@@ -99,9 +99,9 @@ class ProviderFactory:
     def _prepare_kwargs_factory(self, kwargs_data: dict[str, Any]) -> dict:
         # get from container config
         if 'config' in kwargs_data:
-            kwargs_map = self.resolver.resolve(kwargs_data)
+            kwargs_map = self.resolver.resolve(value=kwargs_data)
             if not isinstance(kwargs_map, dict):
-                raise KwargsMapUndefined(kwargs_map)
+                raise KwargsMapUndefined(kwargs_map=kwargs_map)
             return kwargs_map
 
         return kwargs_data

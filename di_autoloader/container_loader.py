@@ -7,8 +7,8 @@ class ConfigurationDependencyIncorrect(ValueError):
         super().__init__(f"Configuration dependency '{name}' is incorrect")
 
 class CreatingProviderFailed(RuntimeError):
-    def __init__(self, name: str, e) -> None:
-        super().__init__(f"Provider '{name}' was not created: {e}")
+    def __init__(self, name: str, error) -> None:
+        super().__init__(f"Provider '{name}' was not created: {error}")
 
 class DIContainerLoader:
     """Класс для загрузки зависимостей в DI-контейнер."""
@@ -16,14 +16,14 @@ class DIContainerLoader:
         self.container = container
         self.provider_factory = provider_factory
 
-    def load(self, config: Dict[str, Any]) -> None:
-        for name, conf in config.items():
-            if not isinstance(conf, dict):
-                raise ConfigurationDependencyIncorrect(name)
+    def load(self, configs: Dict[str, Any]) -> None:
+        for name, config in configs.items():
+            if not isinstance(config, dict):
+                raise ConfigurationDependencyIncorrect(name=name)
             try:
-                self._load_map(self.provider_factory.create_provider(name, conf))
+                self._load_map(self.provider_factory.create_provider(name=name, config=config))
             except Exception as e:
-                raise CreatingProviderFailed(name, e)
+                raise CreatingProviderFailed(name=name, error=e)
 
     def _load_map(self, providers: dict):
         for name, provider in providers.items():

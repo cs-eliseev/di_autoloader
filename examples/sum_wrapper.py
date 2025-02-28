@@ -1,43 +1,45 @@
-from examples.resources.src.container_test_init import container_init
+from di_autoloader.container_autoloader import ContainerAutoloader
 
-container = container_init({
-    'sum_handler': {
-        'provider': 'Factory',
-        'provides': 'examples.resources.src.sum_handler.SumHandler'
-    },
-    'sum_handler_s': {
-        'provider': 'Singleton',
-        'provides': 'examples.resources.src.sum_handler.SumHandler'
-    },
-    'sum_wrapper__sh': {
-        'provider': 'Factory',
-        'provides': 'examples.resources.src.sum_wrapper.SumWrapper',
-        'kwargs': {
-            'handler': {'container': 'sum_handler'}
-        }
-    },
-    'sum_wrapper__sh_s': {
-        'provider': 'Factory',
-        'provides': 'examples.resources.src.sum_wrapper.SumWrapper',
-        'kwargs': {
-            'handler': {'container': 'sum_handler_s'}
-        }
-    },
-    'sum_wrapper_s__sh': {
-        'provider': 'Singleton',
-        'provides': 'examples.resources.src.sum_wrapper.SumWrapper',
-        'kwargs': {
-            'handler': {'container': 'sum_handler'}
-        }
-    },
-    'sum_wrapper_s__sh_s': {
-        'provider': 'Singleton',
-        'provides': 'examples.resources.src.sum_wrapper.SumWrapper',
-        'kwargs': {
-            'handler': {'container': 'sum_handler_s'}
-        }
-    },
-})
+container = ContainerAutoloader.get_instance(
+    configuration={
+        'sum_handler': {
+            'provider': 'Factory',
+            'provides': 'examples.resources.src.sum_handler.SumHandler'
+        },
+        'sum_handler_s': {
+            'provider': 'Singleton',
+            'provides': 'examples.resources.src.sum_handler.SumHandler'
+        },
+        'sum_wrapper__sh': {
+            'provider': 'Factory',
+            'provides': 'examples.resources.src.sum_wrapper.SumWrapper',
+            'kwargs': {
+                'handler': {'container': 'sum_handler'}
+            }
+        },
+        'sum_wrapper__sh_s': {
+            'provider': 'Factory',
+            'provides': 'examples.resources.src.sum_wrapper.SumWrapper',
+            'kwargs': {
+                'handler': {'container': 'sum_handler_s'}
+            }
+        },
+        'sum_wrapper_s__sh': {
+            'provider': 'Singleton',
+            'provides': 'examples.resources.src.sum_wrapper.SumWrapper',
+            'kwargs': {
+                'handler': {'container': 'sum_handler'}
+            }
+        },
+        'sum_wrapper_s__sh_s': {
+            'provider': 'Singleton',
+            'provides': 'examples.resources.src.sum_wrapper.SumWrapper',
+            'kwargs': {
+                'handler': {'container': 'sum_handler_s'}
+            }
+        },
+    }
+)
 
 a = 2
 b = 1

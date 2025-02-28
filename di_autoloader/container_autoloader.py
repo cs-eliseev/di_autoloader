@@ -2,18 +2,18 @@ from typing import Dict, Any, Callable
 from di_autoloader import ContainerWrapper, ContainerFactory
 
 class ContainerAutoloader:
-    _instance = None
+    _instance = {}
 
     @classmethod
     def get_instance(
             cls,
-            instance: str = 'default',
             configuration: Dict[str, Any] | None = None,
             configs: Dict[str, Any] = None,
+            instance: str = 'default',
             init: bool = True,
     ) -> ContainerWrapper:
-        if cls._instance[instance] is None:
-            cls._instance[instance] = ContainerFactory.make_container(configuration, configs)
+        if instance not in cls._instance:
+            cls._instance[instance] = ContainerFactory.make_container(configuration=configuration, configs=configs)
             if init:
                 cls._instance[instance].init_resources()
         return cls._instance[instance]
@@ -26,4 +26,11 @@ class ContainerAutoloader:
             instance: str = 'default',
             init: bool = True,
     ) -> ContainerWrapper:
-        return cls.get_instance(instance, configuration_function(), configs_function(), init)
+        if instance not in cls._instance:
+            return cls.get_instance(
+                instance=instance,
+                configuration=configuration_function(),
+                configs=configs_function(),
+                init=init
+            )
+        return cls._instance[instance]
