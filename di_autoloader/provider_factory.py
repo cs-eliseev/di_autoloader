@@ -33,6 +33,7 @@ class ProviderFactory:
         'Resource': providers.Resource,
         'Dependency': providers.Dependency,
         'Selector': providers.Selector,
+        'Delegate': providers.Delegate,
     }
 
     def __init__(
@@ -56,9 +57,10 @@ class ProviderFactory:
             raise ClassImportFailed(class_path, e)
 
     def create_provider(self, name: str, config: Dict[str, Any]) -> Any:
-        provider_type = self.PROVIDER_MAP.get(config.get('provider'))
+        provider = config.get('provider', 'Factory')
+        provider_type = self.PROVIDER_MAP.get(provider)
         if not provider_type:
-            raise ProviderNotFound(config.get('provider'))
+            raise ProviderNotFound(provider)
         instance = self.import_class(class_path=config['provides']) if 'provides' in config else None
         kwargs = {k: self.resolver.resolve(value=v) for k, v in config.get('kwargs', {}).items()}
 
@@ -72,7 +74,7 @@ class ProviderFactory:
                 instance=instance
             )
 
-        if config.get('provider') == 'Delegate':
+        if provider == 'Delegate':
             return {name: provider_type(lambda: instance(**kwargs))}
 
         # Обычное создание провайдера
