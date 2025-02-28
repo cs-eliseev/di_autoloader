@@ -1,7 +1,7 @@
-from examples.resources.src.container_test_init import container_init
+from di_autoloader.container_autoloader import ContainerAutoloader
 
-container = container_init(
-    {
+container = ContainerAutoloader.get_instance(
+    configuration={
         'sum_object': {
             'provider': 'Factory',
             'provides': 'examples.resources.src.sum_object.SumObject',
@@ -18,7 +18,8 @@ container = container_init(
                 'b': {'config': 'settings.b'}
             }
         }
-    }, {
+    },
+    configs={
         'settings': {
             'a': 3,
             'b': 2,

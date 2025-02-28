@@ -13,7 +13,13 @@ class ContainerFactory:
             container.config.from_dict(configs)
 
         if configuration is not None:
-            loader = DIContainerLoader(container, ProviderFactory(container, DependencyResolver(container)))
+            loader = DIContainerLoader(
+                container=container,
+                provider_factory=ProviderFactory(
+                    container=container,
+                    resolver=DependencyResolver(container=container)
+                ),
+            )
             loader.load(configuration)
 
         return container

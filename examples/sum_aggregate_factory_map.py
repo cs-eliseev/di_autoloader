@@ -1,7 +1,7 @@
-from examples.resources.src.container_test_init import container_init
+from di_autoloader.container_autoloader import ContainerAutoloader
 
-container = container_init(
-    {
+container = ContainerAutoloader.get_instance(
+    configuration={
         'sum_object': {
             'provider': 'Factory',
             'provides': 'examples.resources.src.sum_object.SumObject',
@@ -39,7 +39,7 @@ container = container_init(
         'sum_aggregate_s': {
             'provider': 'Singleton',
             'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
-            'kwargs_map': {
+            'kwargs_factory': {
                 'sum_object__1': {
                     'sum_object': {'container': 'sum_object__1'},
                 },
@@ -51,7 +51,7 @@ container = container_init(
         'sum_aggregate_s2': {
             'provider': 'Singleton',
             'provides': 'examples.resources.src.sum_aggregate.SumAggregate',
-            'kwargs_map': {
+            'kwargs_factory': {
                 'sum_object_s__1': {
                     'sum_object': {'container': 'sum_object_s__1'},
                 },
@@ -60,7 +60,8 @@ container = container_init(
                 },
             },
         },
-    }, {
+    },
+    configs={
         'object': {
             '1': {
                 'a': 4,

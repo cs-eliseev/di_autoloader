@@ -1,6 +1,4 @@
-from examples.resources.src.container_test_init import container_init
+from di_autoloader.container_autoloader import ContainerAutoloader
 
-# Инициализация контейнера
-container = container_init({}, {'settings': {'key': 'this config'}})
-
+container = ContainerAutoloader.get_instance(configs={'settings': {'key': 'this config'}})
 print(container.config.get('settings.key'))

@@ -1,10 +1,10 @@
-from examples.resources.src.container_test_init import container_init
+from di_autoloader.container_autoloader import ContainerAutoloader
 
 a = 3
 b = 1
 
-container = container_init(
-    {
+container = ContainerAutoloader.get_instance(
+    configuration={
         'sum_object': {
             'provider': 'Factory',
             'provides': 'examples.resources.src.sum_object.SumObject',
